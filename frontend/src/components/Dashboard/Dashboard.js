@@ -5,6 +5,8 @@ import AddStock from '../Stocks/AddStock';
 import PortfolioChart from '../Charts/PortfolioChart';
 import { useNavigate } from 'react-router-dom';
 import './Dashboard.css';
+import PieChart2 from '../Charts/PieChart';
+import BarChart from '../Charts/BarChart';
 
 function Dashboard() {
   const [portfolio, setPortfolio] = useState([]);
@@ -23,7 +25,7 @@ function Dashboard() {
       }
     };
     fetchPortfolio();
-  }, []);
+  }, [portfolio]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -31,14 +33,22 @@ function Dashboard() {
   };
 
   return (
-    <div>
+    <div className='dashboard'>
       <div className="dashboard-header">
-        <h2>Your Portfolio</h2>
+        <h2>Portfolio Dashboard</h2>
         <button className="logout-button" onClick={handleLogout}>Logout</button>
       </div>
-      <AddStock setPortfolio={setPortfolio} />
-      <StockList portfolio={portfolio} setPortfolio={setPortfolio} />
-      <PortfolioChart portfolio={portfolio} />
+      <div className='container'>
+        <div className='left-container'>
+          <AddStock setPortfolio={setPortfolio} />
+          <StockList portfolio={portfolio} setPortfolio={setPortfolio} />
+        </div>
+        <div className='right-container'>
+          <PortfolioChart portfolio={portfolio} />
+          <PieChart2 portfolio={portfolio} />
+          <BarChart portfolio={portfolio} />
+        </div>
+      </div>
     </div>
   );
 }

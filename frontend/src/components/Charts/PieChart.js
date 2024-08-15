@@ -1,16 +1,11 @@
 import React from 'react';
 import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
   ResponsiveContainer,
+  PieChart,
+  Pie,
 } from 'recharts';
 
-function PortfolioChart({ portfolio }) {
+function PieChart2({ portfolio }) {
   if (!portfolio || portfolio.length === 0) {
     return <div>No data available</div>;
   }
@@ -22,7 +17,7 @@ function PortfolioChart({ portfolio }) {
 
   return (
     <ResponsiveContainer width="30%" height={300}>
-      <LineChart data={data}>
+      {/* <LineChart data={data}>
         <XAxis dataKey="name" />
         <YAxis />
         <CartesianGrid strokeDasharray="3 3" />
@@ -34,9 +29,13 @@ function PortfolioChart({ portfolio }) {
           stroke="#8884d8"
           activeDot={{ r: 8 }}
         />
-      </LineChart>
+      </LineChart> */}
+      <PieChart width={730} height={350} data={data}>
+        <Pie data={data} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={50} fill="#8884d8" />
+        <Pie data={data} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={80} fill="#82ca9d" label />
+        </PieChart>
     </ResponsiveContainer>
   );
 }
 
-export default PortfolioChart;
+export default PieChart2;

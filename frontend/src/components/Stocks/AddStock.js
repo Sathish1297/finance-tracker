@@ -4,6 +4,7 @@ import axios from 'axios';
 function AddStock({ setPortfolio }) {
   const [symbol, setSymbol] = useState('');
   const [quantity, setQuantity] = useState('');
+  const [error, setError] = useState(false);
   const API_KEY = '3SSNT12I3004VJEI';
   const BASE_URL = 'https://www.alphavantage.co/query';
 
@@ -20,14 +21,17 @@ function AddStock({ setPortfolio }) {
         }
       });
       const data = responseBase.data;
-      console.log({ responseBase },data);
+      // console.log({ responseBase },data);
       if (data) {
         const response = await axios.post('http://localhost:3307/api/portfolio/add', { symbol, quantity }, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setPortfolio((prev) => [...prev, response.data.portfolio]);
+        setSymbol('');
+        setQuantity('');
       }
     } catch (err) {
+      setError(true);
       alert('Failed to add stock');
     }
   };
@@ -37,6 +41,7 @@ function AddStock({ setPortfolio }) {
       <input type="text" value={symbol} onChange={(e) => setSymbol(e.target.value)} placeholder="Stock Symbol" required />
       <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} placeholder="Quantity" required />
       <button type="submit">Add Stock</button>
+      {error && <h3>Failed to add stock</h3>}
     </form>
   );
 }

@@ -1,7 +1,7 @@
 const { Portfolio, Stock } = require('../models');
 
 exports.addStock = async (req, res) => {
-  console.log(req);
+  // console.log(req);
   const { symbol, quantity } = req.body;
 
   if (!symbol || !quantity) {
@@ -61,7 +61,7 @@ exports.removeStock = async (req, res) => {
     const portfolio = await Portfolio.findOne({
       where: {
         id,
-        userId: req.userId, // Ensure this matches the logged-in user
+        userId: req.userId, 
       },
     });
 

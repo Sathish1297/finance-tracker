@@ -1,16 +1,17 @@
 import React from 'react';
 import {
-  LineChart,
-  Line,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
+  Area,
+  ComposedChart,
   Legend,
-  ResponsiveContainer,
+  Bar,
+  Line,
 } from 'recharts';
 
-function PortfolioChart({ portfolio }) {
+function BarChart({ portfolio }) {
   if (!portfolio || portfolio.length === 0) {
     return <div>No data available</div>;
   }
@@ -21,22 +22,17 @@ function PortfolioChart({ portfolio }) {
   }));
 
   return (
-    <ResponsiveContainer width="30%" height={300}>
-      <LineChart data={data}>
+    <ComposedChart width={730} height={250} data={data}>
         <XAxis dataKey="name" />
         <YAxis />
-        <CartesianGrid strokeDasharray="3 3" />
         <Tooltip />
         <Legend />
-        <Line
-          type="monotone"
-          dataKey="value"
-          stroke="#8884d8"
-          activeDot={{ r: 8 }}
-        />
-      </LineChart>
-    </ResponsiveContainer>
+        <CartesianGrid stroke="#f5f5f5" />
+        <Area type="monotone" dataKey="amt" fill="#8884d8" stroke="#8884d8" />
+        <Bar dataKey="value" barSize={20} fill="#413ea0" />
+        <Line type="monotone" dataKey="uv" stroke="#ff7300" />
+    </ComposedChart>
   );
 }
 
-export default PortfolioChart;
+export default BarChart;
